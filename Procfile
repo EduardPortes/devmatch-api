@@ -1,0 +1,1 @@
+web: java -Dspring.profiles.active=heroku -jar target/devmatch-api-0.0.1-SNAPSHOT.jar
