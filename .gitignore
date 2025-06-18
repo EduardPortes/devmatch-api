@@ -202,3 +202,4 @@ README.html
 application-dev.properties
 application-prod.properties
 application.properties
+docker/volumes/
