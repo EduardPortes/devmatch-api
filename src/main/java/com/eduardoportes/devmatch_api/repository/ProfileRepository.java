@@ -22,11 +22,13 @@ public interface ProfileRepository extends JpaRepository<Profile, Long>, Profile
     @Query("SELECT p FROM Profile p " +
             "WHERE p.gender IN :seekingGenders " +
             "AND :userGender MEMBER OF p.seekingGenders " +
-            "AND p.user.id <> :excludedUserId")
+            "AND p.user.id <> :excludedUserId " +
+            "AND p.id NOT IN :dislikedIds")
     Page<Profile> findPotentialMatches(
             @Param("userGender") Gender userGender,
             @Param("seekingGenders") List<Gender> seekingGenders,
             @Param("excludedUserId") Long excludedUserId,
+            @Param("dislikedIds") List<Long> dislikedIds,
             Pageable pageable
     );
 
