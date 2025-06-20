@@ -5,20 +5,12 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -40,6 +32,9 @@ public class Profile {
     private String name;
     private String bio;
     private String location;
+
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
 
     @Column(name = "git_hub_url")
     private String gitHubUrl;
@@ -68,5 +63,14 @@ public class Profile {
         inverseJoinColumns = @JoinColumn(name = "interest_id")
     )
     private List<Interest> interests;
+
+    @ElementCollection
+    @CollectionTable(
+            name = "profile_seeking_genders",
+            joinColumns = @JoinColumn(name = "profile_id")
+    )
+    @Enumerated(EnumType.STRING)
+    @Column(name = "seeking_gender")
+    private List<Gender> seekingGenders;
 
 }
